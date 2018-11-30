@@ -1,0 +1,72 @@
+import { StyleSheet } from 'react-native';
+const base1 = '#FFFFFF';
+const base2 = '#222222';
+const base3 = '#CEDB56';
+const add1 = '#CCCCCC';
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: base1,
+	},
+	containerDescription: {
+		flex: 1,
+		justifyContent: 'center',
+		backgroundColor: base1,
+	},
+	title: {
+		fontSize: 20,
+		marginBottom: 25,
+		color: base2,
+		fontFamily: 'VINCHAND'
+	},
+	input: {
+		borderLeftWidth: 1,
+		borderRightWidth: 1,
+		borderTopWidth: 1,
+		borderBottomWidth: 1,
+		borderColor: add1,
+		padding: 0,
+		width: 200,
+		marginBottom: 15,
+		height: 25,
+		textAlign: 'center',
+		fontFamily: 'VINCHAND'
+	},
+	button: {
+		height: 25,
+		width: 50,
+		backgroundColor: base3,
+		marginLeft: 15,
+	},
+	label: {
+		fontFamily: 'VINCHAND',
+		textAlign: 'center',
+		width: 50,
+	},
+	itemContainer: {
+		flex: 1,
+		flexDirection: 'row',
+	},
+	itemName: {
+		flexGrow: 1,
+		fontFamily: 'VINCHAND',
+		marginLeft: 10
+	},
+	product: {
+		fontFamily: 'VINCHAND',
+		fontSize: 20,
+		marginLeft: 25,
+		color: base2,
+		textAlign: 'left'
+	},
+	description: {
+		margin: 15,
+		fontFamily: 'VINCHAND',
+		color: base2,
+	}
+});
+
+export { styles };
