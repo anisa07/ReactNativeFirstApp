@@ -1,6 +1,6 @@
 import { Component } from "react";
 import React from "react";
-import { Button, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Image, Text, TouchableOpacity, View } from 'react-native';
 import { products } from './data';
 import { styles } from './styles';
 
@@ -12,7 +12,10 @@ export default class Product extends Component<Props> {
 
 		return (
 			<View style={styles.containerDescription}>
-				<Text style={styles.product} >{product.name}</Text>
+				<View style={styles.imageTitle}>
+					<Image style={{width: 25, height: 25}} source={product.image} />
+					<Text style={styles.product} >{product.name}</Text>
+				</View>
 				<Text style={styles.description}>{product.description}</Text>
 				<TouchableOpacity
 					onPress={() => this.props.navigation.navigate('ProductsList')}

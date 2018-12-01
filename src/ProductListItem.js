@@ -6,10 +6,10 @@ import { styles } from './styles';
 export default class ProductsListItem extends Component<Props> {
 	render() {
 		const { item } = this.props;
-		const imagePath = `/pics/${item.image}`;
+
 		return (
 			<View style={styles.itemContainer}>
-				{/*<Image style={{width: 20, height: 20}} source={require(imagePath)} />*/}
+				<Image style={{width: 20, height: 20}} source={item.image} />
 				<Text style={styles.itemName}>{item.name}</Text>
 				<TouchableOpacity
 					onPress={() => this.props.navigation.navigate('Product', {itemId: item.id})}

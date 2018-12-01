@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: base1,
 	},
+	productList: {
+		backgroundColor: base1,
+	},
 	containerDescription: {
 		flex: 1,
 		justifyContent: 'center',
@@ -20,7 +23,8 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		marginBottom: 25,
 		color: base2,
-		fontFamily: 'VINCHAND'
+		fontFamily: 'VINCHAND',
+		textAlign: 'center',
 	},
 	input: {
 		borderLeftWidth: 1,
@@ -47,18 +51,19 @@ const styles = StyleSheet.create({
 		width: 50,
 	},
 	itemContainer: {
-		flex: 1,
+		// flex: 1,
 		flexDirection: 'row',
+		marginBottom: 5
 	},
 	itemName: {
 		flexGrow: 1,
 		fontFamily: 'VINCHAND',
-		marginLeft: 10
+		marginLeft: 10,
 	},
 	product: {
 		fontFamily: 'VINCHAND',
 		fontSize: 20,
-		marginLeft: 25,
+		marginLeft: 5,
 		color: base2,
 		textAlign: 'left'
 	},
@@ -66,6 +71,10 @@ const styles = StyleSheet.create({
 		margin: 15,
 		fontFamily: 'VINCHAND',
 		color: base2,
+	},
+	imageTitle: {
+		flexDirection: 'row',
+		paddingLeft: 10
 	}
 });
 

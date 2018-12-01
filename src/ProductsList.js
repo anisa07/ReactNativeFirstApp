@@ -8,14 +8,15 @@ import { products } from './data';
 export default class ProductsList extends Component<Props> {
 	render() {
 		return (
-			<View style={styles.container}>
+			<View style={styles.productList}>
 				<Text style={styles.title}>Products</Text>
 				{ products.map(item =>
 					<ProductsListItem
 						key={item.id}
 						item={item}
 						navigation={this.props.navigation}
-					/>)
+					/>
+					)
 				}
 			</View>
 		);
