@@ -3,7 +3,7 @@ import React from "react";
 import { TouchableOpacity, Text, View, Image } from 'react-native';
 import { styles } from './styles';
 
-export default class ProductsListItem extends Component<Props> {
+export default class ProductsListItem extends Component {
 	render() {
 		const { item } = this.props;
 

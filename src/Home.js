@@ -3,15 +3,52 @@ import React from "react";
 import { TextInput, Text, View, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 
-export default class Home extends Component<Props> {
+export default class Home extends Component {
+	state = {
+		email: '',
+		pwd: ''
+	};
+
+	handleLogin = () => {
+		const {email, pwd} = this.state;
+		const myHeaders = new Headers();
+
+		myHeaders.append('Content-Type', 'application/json');
+		myHeaders.append('Authorization', `{'username':'${email}', 'password': '${pwd}'}`);
+
+		fetch('https://github.com/login/oauth/authorize',
+			{
+				headers: myHeaders
+			}).then(res => {
+				this.props.navigation.navigate('ProductsList');
+			});
+	};
+
+	handleChangeEmail= (email) => {
+		this.setState({ email })
+	};
+
+	handleChangePwd= (pwd) => {
+		this.setState({ pwd })
+	};
+
 	render () {
 		return (
 			<View style={styles.container}>
 				<Text style={styles.title}>Friday the 13th shop</Text>
-				<TextInput placeholder="email" style={styles.input}/>
-				<TextInput placeholder="password" style={styles.input}/>
+				<TextInput
+					placeholder="login"
+					style={styles.input}
+					value={this.state.email}
+					onChangeText={(email) => this.handleChangeEmail(email)}/>
+				<TextInput
+					placeholder="password"
+					style={styles.input}
+					value={this.state.pwd}
+					secureTextEntry={true}
+					onChangeText={(pwd) => this.handleChangePwd(pwd)}/>
 				<TouchableOpacity
-					onPress={() => this.props.navigation.navigate('ProductsList')}
+					onPress={this.handleLogin}
 					style={styles.button}>
 					<Text style={styles.label}> Login </Text>
 				</TouchableOpacity>
