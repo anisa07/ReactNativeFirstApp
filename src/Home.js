@@ -10,25 +10,30 @@ export default class Home extends Component {
 	};
 
 	handleLogin = () => {
-		const {email, pwd} = this.state;
+		const { email, pwd } = this.state;
 		const myHeaders = new Headers();
 
 		myHeaders.append('Content-Type', 'application/json');
-		myHeaders.append('Authorization', `{'username':'${email}', 'password': '${pwd}'}`);
 
-		fetch('https://github.com/login/oauth/authorize',
-			{
-				headers: myHeaders
-			}).then(res => {
-				this.props.navigation.navigate('ProductsList');
-			});
+		fetch('http://10.6.219.46/index.php/rest/V1/integration/customer/token', {
+			method: 'POST',
+			headers: myHeaders,
+			body: JSON.stringify({ username: email, password: pwd })
+		}).then(res => {
+				if (res.status === 200) {
+					this.props.navigation.navigate('ProductsList');
+				}
+				console.log(res.status)
+			}).catch(e => {
+			console.log(e)
+		});
 	};
 
-	handleChangeEmail= (email) => {
+	handleChangeEmail = (email) => {
 		this.setState({ email })
 	};
 
-	handleChangePwd= (pwd) => {
+	handleChangePwd = (pwd) => {
 		this.setState({ pwd })
 	};
 
