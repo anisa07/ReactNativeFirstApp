@@ -12,7 +12,7 @@ export default class ProductsListItem extends Component {
 				<Image style={{width: 20, height: 20}} source={item.image} />
 				<Text style={styles.itemName}>{item.name}</Text>
 				<TouchableOpacity
-					onPress={() => this.props.navigation.navigate('Product', {itemId: item.id})}
+					onPress={() => this.props.navigation.navigate('Product', {itemId: item.id, item})}
 				>
 					<Image style={{width: 20, height: 20}} source={require('./pics/arrowRight.png')} />
 				</TouchableOpacity>

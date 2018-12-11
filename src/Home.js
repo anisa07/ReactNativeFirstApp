@@ -14,14 +14,13 @@ export default class Home extends Component {
 		const myHeaders = new Headers();
 
 		myHeaders.append('Content-Type', 'application/json');
-
 		fetch('http://10.6.219.46/index.php/rest/V1/integration/customer/token', {
 			method: 'POST',
 			headers: myHeaders,
 			body: JSON.stringify({ username: email, password: pwd })
 		}).then(res => {
 				if (res.status === 200) {
-					this.props.navigation.navigate('ProductsList');
+					this.props.navigation.navigate('ProductsList', {title: 'Cool Product List'});
 				}
 				console.log(res.status)
 			}).catch(e => {
