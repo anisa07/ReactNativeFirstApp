@@ -7,14 +7,17 @@ import { products } from './data';
 
 export default class ProductsList extends Component<Props> {
 	render() {
+		const { navigation } = this.props;
+		const title = navigation.getParam('title', 'Products');
+
 		return (
 			<View style={styles.productList}>
-				<Text style={styles.title}>Products</Text>
+				<Text style={styles.title}>{title}</Text>
 				{ products.map(item =>
 					<ProductsListItem
 						key={item.id}
 						item={item}
-						navigation={this.props.navigation}
+						navigation={navigation}
 					/>
 					)
 				}
