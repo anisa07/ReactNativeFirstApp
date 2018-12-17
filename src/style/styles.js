@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
 		width: 50,
 	},
 	itemContainer: {
-		// flex: 1,
 		flexDirection: 'row',
 		marginBottom: 5
 	},

@@ -1,9 +1,10 @@
 import { Component } from "react";
 import React from "react";
 import { TextInput, Text, View, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
+import { NetConnectionModal } from './components/NetConnectionModal';
+import { styles } from '../style/styles';
 
-export default class Home extends Component {
+export default class Home extends React.PureComponent {
 	state = {
 		email: '',
 		pwd: ''
@@ -13,19 +14,20 @@ export default class Home extends Component {
 		const { email, pwd } = this.state;
 		const myHeaders = new Headers();
 
-		myHeaders.append('Content-Type', 'application/json');
-		fetch('http://10.6.219.46/index.php/rest/V1/integration/customer/token', {
-			method: 'POST',
-			headers: myHeaders,
-			body: JSON.stringify({ username: email, password: pwd })
-		}).then(res => {
-				if (res.status === 200) {
-					this.props.navigation.navigate('ProductsList', {title: 'Cool Product List'});
-				}
-				console.log(res.status)
-			}).catch(e => {
-			console.log(e)
-		});
+		// myHeaders.append('Content-Type', 'application/json');
+		// fetch('http://10.6.219.46/index.php/rest/V1/integration/customer/token', {
+		// 	method: 'POST',
+		// 	headers: myHeaders,
+		// 	body: JSON.stringify({ username: email, password: pwd })
+		// }).then(res => {
+		// 		if (res.status === 200) {
+		// 			this.props.navigation.navigate('ProductsList', {title: 'Cool Product List'});
+		// 		}
+		// 		console.log(res.status)
+		// 	}).catch(e => {
+		// 	console.log(e)
+		// });
+		this.props.navigation.navigate('ProductsList', {title: 'Cool Product List'});
 	};
 
 	handleChangeEmail = (email) => {
@@ -56,6 +58,7 @@ export default class Home extends Component {
 					style={styles.button}>
 					<Text style={styles.label}> Login </Text>
 				</TouchableOpacity>
+				<NetConnectionModal />
 			</View>
 		);
 	}
