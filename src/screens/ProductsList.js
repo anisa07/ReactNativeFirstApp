@@ -4,13 +4,13 @@ import ProductsListItem from './components/ProductListItem';
 import { NetConnectionModal } from './components/NetConnectionModal';
 import { styles } from '../style/styles';
 import { products } from '../data/data';
-import { productListUrl } from "../data/settings";
+import { productListUrl, productListUrl2 } from "../data/settings";
 
 export default class ProductsList extends React.PureComponent {
 	state = {
 		selected: new Map(),
 		items: [],
-		page: 1,
+		page: 17,
 		refreshing: false,
 	};
 
@@ -18,8 +18,8 @@ export default class ProductsList extends React.PureComponent {
 		this.getData();
 	}
 
-	getData = () => {
-		fetch(productListUrl).then((result) => {
+	getData = (url = productListUrl) => {
+		fetch(url).then((result) => {
 			const products = this.state.items.slice();
 			const newProducts = JSON.parse(result._bodyText).items.map(item => {
 				item.id = (item.id).toString();
@@ -49,23 +49,23 @@ export default class ProductsList extends React.PureComponent {
 	};
 
 	handleRefresh = () => {
-		const page = this.state.page++;
+		const {page} = this.state;
 
 		this.setState({
 			refreshing: true,
-			page: page,
+			page: page + 1,
 		}, () => {
-			this.getData()
+			this.getData(`${productListUrl2}${page}`)
 		})
 	};
 
 	handleAddMore = () => {
-		const page = this.state.page++;
+		const {page} = this.state;
 
 		this.setState({
-			page: page,
+			page: page + 1,
 		}, () => {
-			this.getData()
+			this.getData(`${productListUrl2}${page}`)
 		})
 	};
 
