@@ -23,7 +23,14 @@ export default class ProductsList extends React.PureComponent {
 			const products = this.state.items.slice();
 			const newProducts = JSON.parse(result._bodyText).items.map(item => {
 				item.id = (item.id).toString();
-				return item
+				const attr = item.custom_attributes.find(attr => {
+					if (attr.attribute_code === 'description') {
+						return attr;
+					}
+				});
+				item.description = attr ? attr.value.replace(/<.{1,3}>/g, '') : 'fake description';
+
+				return item;
 			});
 
 			this.setState({
