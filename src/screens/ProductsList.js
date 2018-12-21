@@ -3,15 +3,15 @@ import { Text, View, FlatList } from 'react-native';
 import ProductsListItem from './components/ProductListItem';
 import { NetConnectionModal } from './components/NetConnectionModal';
 import { styles } from '../style/styles';
-import { products } from '../data/data';
 import { productListUrl, productListUrl2 } from "../data/settings";
 
 export default class ProductsList extends React.PureComponent {
 	state = {
 		selected: new Map(),
 		items: [],
-		page: 17,
+		page: 11,
 		refreshing: false,
+		len: 0,
 	};
 
 	componentDidMount () {
@@ -21,7 +21,12 @@ export default class ProductsList extends React.PureComponent {
 	getData = (url = productListUrl) => {
 		fetch(url).then((result) => {
 			const products = this.state.items.slice();
-			const newProducts = JSON.parse(result._bodyText).items.map(item => {
+			const parsedResults = JSON.parse(result._bodyText);
+			console.log(parsedResults)
+			this.setState({
+				len: parsedResults.total_count
+			});
+			const newProducts = parsedResults.items.map(item => {
 				item.id = (item.id).toString();
 				const attr = item.custom_attributes.find(attr => {
 					if (attr.attribute_code === 'description') {
@@ -40,40 +45,26 @@ export default class ProductsList extends React.PureComponent {
 		});
 	};
 
-	keyExtractor = () => {
-		const key = new Date();
-		return (Math.floor(Math.random() * key.getTime())).toString();
-	};
+	keyExtractor = (item) => item.id;
 
 	onPressItem = (id) => {
-		// updater functions are preferred for transactional updates
 		this.setState((state) => {
-			// copy the map rather than modifying state.
 			const selected = new Map(state.selected);
-			selected.set(id, !selected.get(id)); // toggle
+			selected.set(id, !selected.get(id));
 			return { selected };
 		});
 	};
 
 	handleRefresh = () => {
-		const {page} = this.state;
-
-		this.setState({
-			refreshing: true,
-			page: page + 1,
-		}, () => {
-			this.getData(`${productListUrl2}${page}`)
-		})
-	};
-
-	handleAddMore = () => {
-		const {page} = this.state;
-
-		this.setState({
-			page: page + 1,
-		}, () => {
-			this.getData(`${productListUrl2}${page}`)
-		})
+		const { page, len } = this.state;
+		if (page < len) {
+			this.setState({
+				refreshing: true,
+				page: page + 1,
+			}, () => {
+				this.getData(`${productListUrl2}${page}`)
+			})
+		}
 	};
 
 	renderItem = ({ item }) => {
@@ -102,8 +93,7 @@ export default class ProductsList extends React.PureComponent {
 					renderItem={this.renderItem}
 					refreshing={this.state.refreshing}
 					onRefresh={this.handleRefresh}
-					onEndReached={this.handleAddMore}
-					onEndReachedThreshold={100}
+					// onEndReached={this.handleRefresh}
 				/>
 				<NetConnectionModal/>
 			</View>
