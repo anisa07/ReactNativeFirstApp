@@ -1,9 +1,10 @@
-import { Component } from "react";
 import React from "react";
 import { TextInput, Text, View, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
+import { NetConnectionModal } from './components/NetConnectionModal';
+import { styles } from '../style/styles';
+import { loginUrl } from "../data/settings";
 
-export default class Home extends Component {
+export default class Home extends React.PureComponent {
 	state = {
 		email: '',
 		pwd: ''
@@ -14,7 +15,7 @@ export default class Home extends Component {
 		const myHeaders = new Headers();
 
 		myHeaders.append('Content-Type', 'application/json');
-		fetch('http://10.6.219.46/index.php/rest/V1/integration/customer/token', {
+		fetch(loginUrl, {
 			method: 'POST',
 			headers: myHeaders,
 			body: JSON.stringify({ username: email, password: pwd })
@@ -26,6 +27,7 @@ export default class Home extends Component {
 			}).catch(e => {
 			console.log(e)
 		});
+		// this.props.navigation.navigate('ProductsList', {title: 'Cool Product List'});
 	};
 
 	handleChangeEmail = (email) => {
@@ -56,6 +58,7 @@ export default class Home extends Component {
 					style={styles.button}>
 					<Text style={styles.label}> Login </Text>
 				</TouchableOpacity>
+				<NetConnectionModal />
 			</View>
 		);
 	}

@@ -1,9 +1,10 @@
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
-import Home from './Home';
-import Product from './Product';
-import ProductsList from './ProductsList';
+import Home from './screens/Home';
+import Product from './screens/Product';
+import ProductsList from './screens/ProductsList';
+import ProductMap from './screens/ProductMap';
 
-const AppStack = createStackNavigator({ ProductsList, Product });
+const AppStack = createStackNavigator({ ProductsList, Product, ProductMap });
 const AppNavigator = createSwitchNavigator(
 	{
 		App: AppStack,
