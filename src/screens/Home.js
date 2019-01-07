@@ -1,8 +1,19 @@
 import React from "react";
-import { TextInput, Text, View, TouchableOpacity } from 'react-native';
+import {
+	TextInput,
+	Text,
+	View,
+	TouchableOpacity,
+	NativeModules,
+	LayoutAnimation
+} from 'react-native';
 import { NetConnectionModal } from './components/NetConnectionModal';
 import { styles } from '../style/styles';
 import { loginUrl } from "../data/settings";
+
+const { UIManager } = NativeModules;
+
+UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export default class Home extends React.PureComponent {
 	state = {
@@ -21,12 +32,14 @@ export default class Home extends React.PureComponent {
 			body: JSON.stringify({ username: email, password: pwd })
 		}).then(res => {
 				if (res.status === 200) {
+		     LayoutAnimation.spring();
 					this.props.navigation.navigate('ProductsList', {title: 'Cool Product List'});
 				}
 				console.log(res.status)
 			}).catch(e => {
 			console.log(e)
 		});
+		// LayoutAnimation.spring();
 		// this.props.navigation.navigate('ProductsList', {title: 'Cool Product List'});
 	};
 

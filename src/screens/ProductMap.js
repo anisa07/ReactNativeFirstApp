@@ -1,6 +1,6 @@
 import React from "react";
-import { TouchableOpacity, View, StyleSheet, Text, Linking } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
+import { View, StyleSheet, Linking } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { NetConnectionModal } from './components/NetConnectionModal';
 
 
@@ -22,7 +22,7 @@ export default class ProductMap extends React.PureComponent {
 		return (
 			<View style={styles.container}>
 				<MapView
-					provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+					provider={PROVIDER_GOOGLE}
 					style={styles.map}
 					initialRegion={{
 						latitude: 37.78825,
