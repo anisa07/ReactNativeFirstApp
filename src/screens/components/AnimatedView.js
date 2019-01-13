@@ -11,7 +11,7 @@ export class AnimatedView extends React.Component {
 			this.state.animInitValue,
 			{
 				toValue: 1,
-				duration: 2500,
+				duration: 1000,
 			}
 		).start();
 	}

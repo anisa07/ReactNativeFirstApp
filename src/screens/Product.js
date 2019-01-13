@@ -14,7 +14,7 @@ export default class Product extends React.PureComponent {
 		const item = navigation.getParam('item', {});
 
 		return (
-			<AnimatedView style={styles.containerDescription}>
+			<View style={styles.containerDescription}>
 				<View style={styles.imageTitle}>
 					<TouchableOpacity
 						onPress={() => this.props.navigation.navigate('ProductMap')}
@@ -30,7 +30,7 @@ export default class Product extends React.PureComponent {
 					<Text style={styles.label}>Products</Text>
 				</TouchableOpacity>
 				<NetConnectionModal/>
-			</AnimatedView>
+			</View>
 		);
 	}
 }

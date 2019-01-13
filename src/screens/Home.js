@@ -31,12 +31,12 @@ export default class Home extends React.PureComponent {
 			headers: myHeaders,
 			body: JSON.stringify({ username: email, password: pwd })
 		}).then(res => {
-				if (res.status === 200) {
-		     LayoutAnimation.spring();
-					this.props.navigation.navigate('ProductsList', {title: 'Cool Product List'});
-				}
-				console.log(res.status)
-			}).catch(e => {
+			if (res.status === 200) {
+				LayoutAnimation.spring();
+				this.props.navigation.navigate('ProductsList', { title: 'Cool Product List' });
+			}
+			console.log(res.status)
+		}).catch(e => {
 			console.log(e)
 		});
 		// LayoutAnimation.spring();
@@ -71,7 +71,7 @@ export default class Home extends React.PureComponent {
 					style={styles.button}>
 					<Text style={styles.label}> Login </Text>
 				</TouchableOpacity>
-				<NetConnectionModal />
+				<NetConnectionModal/>
 			</View>
 		);
 	}

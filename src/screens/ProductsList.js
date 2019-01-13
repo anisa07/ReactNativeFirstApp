@@ -11,7 +11,7 @@ export default class ProductsList extends React.PureComponent {
 	state = {
 		selected: new Map(),
 		items: [],
-		page: 13,
+		page: 19,
 		refreshing: false,
 		len: 0,
 	};
@@ -95,13 +95,13 @@ export default class ProductsList extends React.PureComponent {
 			outputRange: ['rgb(0,0,0)', 'rgb(0, 250, 100)']
 		});
 		const animatedStyle = {
-			color: interpolateColor
+			color: interpolateColor,
 		};
 
 		return (
 			<View>
 				<Animated.Text style={[styles.title, animatedStyle]}>{title}</Animated.Text>
-				<FlatList
+				<Animated.FlatList
 					data={this.state.items}
 					extraData={this.state}
 					keyExtractor={this.keyExtractor}
@@ -109,6 +109,12 @@ export default class ProductsList extends React.PureComponent {
 					refreshing={this.state.refreshing}
 					onRefresh={this.handleRefresh}
 					// onEndReached={this.handleRefresh}
+					// onEndReachedThreshold={0.01}
+					onScroll={
+						Animated.event(
+							[{ nativeEvent: { contentOffset: { y: this.animatedValue } } }],
+							{ listener: this.handleRefresh }
+						)}
 				/>
 				<NetConnectionModal/>
 			</View>
