@@ -1,10 +1,15 @@
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { NetConnectionModal } from './components/NetConnectionModal';
+import { AnimatedView } from './components/AnimatedView';
 import { styles } from '../style/styles';
 
 export default class Product extends React.PureComponent {
-	render() {
+	handleOpenProductList = () => {
+		this.props.navigation.navigate('ProductsList')
+	};
+
+	render () {
 		const { navigation } = this.props;
 		const item = navigation.getParam('item', {});
 
@@ -14,17 +19,17 @@ export default class Product extends React.PureComponent {
 					<TouchableOpacity
 						onPress={() => this.props.navigation.navigate('ProductMap')}
 					>
-						<Image style={{width: 25, height: 25}} source={require('../pics/map.png')} />
+						<Image style={{ width: 25, height: 25 }} source={require('../pics/map.png')}/>
 					</TouchableOpacity>
-					<Text style={styles.product} >{item.name}</Text>
+					<Text style={styles.product}>{item.name}</Text>
 				</View>
 				<Text style={styles.description}>{item.description}</Text>
 				<TouchableOpacity
-					onPress={() => this.props.navigation.navigate('ProductsList')}
+					onPress={this.handleOpenProductList}
 					style={styles.button}>
 					<Text style={styles.label}>Products</Text>
 				</TouchableOpacity>
-				<NetConnectionModal />
+				<NetConnectionModal/>
 			</View>
 		);
 	}

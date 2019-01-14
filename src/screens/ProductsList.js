@@ -1,28 +1,37 @@
 import React from "react";
-import { Text, View, FlatList } from 'react-native';
+import {View, FlatList, Animated } from 'react-native';
 import ProductsListItem from './components/ProductListItem';
 import { NetConnectionModal } from './components/NetConnectionModal';
 import { styles } from '../style/styles';
 import { productListUrl, productListUrl2 } from "../data/settings";
 
 export default class ProductsList extends React.PureComponent {
+	animatedValue = new Animated.Value(0);
+
 	state = {
 		selected: new Map(),
 		items: [],
-		page: 11,
+		page: 19,
 		refreshing: false,
 		len: 0,
 	};
 
 	componentDidMount () {
 		this.getData();
+		Animated.timing(
+			this.animatedValue,
+			{
+				toValue: 150,
+				duration: 1500,
+			}
+		).start();
 	}
 
 	getData = (url = productListUrl) => {
 		fetch(url).then((result) => {
 			const products = this.state.items.slice();
 			const parsedResults = JSON.parse(result._bodyText);
-			console.log(parsedResults)
+
 			this.setState({
 				len: parsedResults.total_count
 			});
@@ -78,15 +87,21 @@ export default class ProductsList extends React.PureComponent {
 		/>
 	};
 
-
 	render () {
 		const { navigation } = this.props;
 		const title = navigation.getParam('title', 'Products');
+		const interpolateColor = this.animatedValue.interpolate({
+			inputRange: [10, 200],
+			outputRange: ['rgb(0,0,0)', 'rgb(0, 250, 100)']
+		});
+		const animatedStyle = {
+			color: interpolateColor,
+		};
 
 		return (
 			<View>
-				<Text style={styles.title}>{title}</Text>
-				<FlatList
+				<Animated.Text style={[styles.title, animatedStyle]}>{title}</Animated.Text>
+				<Animated.FlatList
 					data={this.state.items}
 					extraData={this.state}
 					keyExtractor={this.keyExtractor}
@@ -94,6 +109,12 @@ export default class ProductsList extends React.PureComponent {
 					refreshing={this.state.refreshing}
 					onRefresh={this.handleRefresh}
 					// onEndReached={this.handleRefresh}
+					// onEndReachedThreshold={0.01}
+					onScroll={
+						Animated.event(
+							[{ nativeEvent: { contentOffset: { y: this.animatedValue } } }],
+							{ listener: this.handleRefresh }
+						)}
 				/>
 				<NetConnectionModal/>
 			</View>
