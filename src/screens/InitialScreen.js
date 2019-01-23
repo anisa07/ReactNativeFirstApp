@@ -1,5 +1,6 @@
 import React from "react";
 import { AsyncStorage, LayoutAnimation, View } from 'react-native';
+import { NetConnectionModal } from "./components/NetConnectionModal";
 
 export default class InitialScreen extends React.PureComponent {
 	constructor(props) {
@@ -12,6 +13,7 @@ export default class InitialScreen extends React.PureComponent {
 		const { navigation } = this.props;
 
 		try {
+			// const loggedIn = null
 			const loggedIn = await AsyncStorage.getItem('UserIsLoggedIn');
 
 			if (loggedIn !== null) {
@@ -28,7 +30,9 @@ export default class InitialScreen extends React.PureComponent {
 
 	render () {
 		return (
-			<View/>
+			<View>
+				<NetConnectionModal/>
+			</View>
 		)
 	}
 }
