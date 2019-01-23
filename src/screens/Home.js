@@ -33,41 +33,32 @@ export default class Home extends React.PureComponent {
 		myHeaders.append('Content-Type', 'application/json');
 
 		try {
-			const loggedIn = await AsyncStorage.getItem('UserIsLoggedIn');
+			const response = await fetch(loginUrl, {
+				method: 'POST',
+				headers: myHeaders,
+				body: JSON.stringify({ username: email, password: pwd })
+			});
 
-			if (loggedIn !== null) {
-				LayoutAnimation.spring();
-				this.props.navigation.navigate('ProductsList', { title: 'Cool Product List' });
-			} else {
-				try {
-					const response = await fetch(loginUrl, {
-						method: 'POST',
-						headers: myHeaders,
-						body: JSON.stringify({ username: email, password: pwd })
-					});
-
-					if (response.status === 200) {
-						try {
-							await AsyncStorage.setItem('UserIsLoggedIn', 'true');
-						} catch (error) {
-							console.log(`${error} setting authorise status`)
-						}
-						LayoutAnimation.spring();
-						this.props.navigation.navigate('ProductsList', { title: 'Cool Product List' });
+			switch(response.status){
+				case(200):
+					try {
+						await AsyncStorage.setItem('UserIsLoggedIn', 'true');
+					} catch (error) {
+						console.log(`${error} setting authorise status`)
 					}
-					if (response.status === 400) {
-						this.handleChangeShowNotification(true);
-						Vibration.vibrate(700);
-					} else {
-						console.log(response.status)
-					}
-				}
-				catch (error) {
-					console.log(`${error} fetching login and pwd`)
-				}
+					LayoutAnimation.spring();
+					this.props.navigation.navigate('ProductsList', { title: 'Cool Product List' });
+					break;
+				case(401):
+					this.handleChangeShowNotification(true);
+					Vibration.vibrate(700);
+					break;
+				default:
+					console.log(response.status)
 			}
-		} catch (error) {
-			console.log(`${error} checking authorise status`)
+		}
+		catch (error) {
+			console.log(`${error} fetching login and pwd`)
 		}
 	};
 
