@@ -3,6 +3,7 @@ const base1 = '#FFFFFF';
 const base2 = '#222222';
 const base3 = '#CEDB56';
 const add1 = '#CCCCCC';
+const err = '#FF11BB';
 
 const styles = StyleSheet.create({
 	container: {
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 20,
-		marginBottom: 25,
+		// marginBottom: 10,
 		color: base2,
 		fontFamily: 'VINCHAND',
 		textAlign: 'center',
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
 		borderColor: add1,
 		padding: 0,
 		width: 200,
-		marginBottom: 15,
+		marginTop: 15,
 		height: 25,
 		textAlign: 'center',
 		fontFamily: 'VINCHAND'
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
 		height: 25,
 		width: 50,
 		backgroundColor: base3,
-		marginLeft: 15,
+		margin: 15,
 	},
 	label: {
 		fontFamily: 'VINCHAND',
@@ -74,6 +75,13 @@ const styles = StyleSheet.create({
 	imageTitle: {
 		flexDirection: 'row',
 		paddingLeft: 10
+	},
+	errorText: {
+		fontSize: 18,
+		color: err,
+		fontFamily: 'VINCHAND',
+		textAlign: 'center',
+		margin: 15
 	}
 });
 

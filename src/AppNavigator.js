@@ -3,15 +3,18 @@ import Home from './screens/Home';
 import Product from './screens/Product';
 import ProductsList from './screens/ProductsList';
 import ProductMap from './screens/ProductMap';
+import InitialScreen from './screens/InitialScreen';
 
 const AppStack = createStackNavigator({ ProductsList, Product, ProductMap });
 const AppNavigator = createSwitchNavigator(
 	{
 		App: AppStack,
 		Auth: Home,
+		InitialScreen,
 	},
 	{
-		initialRouteName: 'Auth',
+		headerMode: 'none',
+		initialRouteName: 'InitialScreen',
 	}
 );
 

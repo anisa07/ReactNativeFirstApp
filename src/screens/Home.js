@@ -5,7 +5,9 @@ import {
 	View,
 	TouchableOpacity,
 	NativeModules,
-	LayoutAnimation
+	LayoutAnimation,
+	Vibration,
+	AsyncStorage,
 } from 'react-native';
 import { NetConnectionModal } from './components/NetConnectionModal';
 import { styles } from '../style/styles';
@@ -18,29 +20,46 @@ UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationE
 export default class Home extends React.PureComponent {
 	state = {
 		email: '',
-		pwd: ''
+		pwd: '',
+		showNotification: false,
 	};
 
-	handleLogin = () => {
+	handleLogin = async () => {
 		const { email, pwd } = this.state;
 		const myHeaders = new Headers();
 
+		this.handleChangeShowNotification(false);
+
 		myHeaders.append('Content-Type', 'application/json');
-		fetch(loginUrl, {
-			method: 'POST',
-			headers: myHeaders,
-			body: JSON.stringify({ username: email, password: pwd })
-		}).then(res => {
-			if (res.status === 200) {
-				LayoutAnimation.spring();
-				this.props.navigation.navigate('ProductsList', { title: 'Cool Product List' });
+
+		try {
+			const response = await fetch(loginUrl, {
+				method: 'POST',
+				headers: myHeaders,
+				body: JSON.stringify({ username: email, password: pwd })
+			});
+
+			switch(response.status){
+				case(200):
+					try {
+						await AsyncStorage.setItem('UserIsLoggedIn', 'true');
+					} catch (error) {
+						console.log(`${error} setting authorise status`)
+					}
+					LayoutAnimation.spring();
+					this.props.navigation.navigate('ProductsList', { title: 'Cool Product List' });
+					break;
+				case(401):
+					this.handleChangeShowNotification(true);
+					Vibration.vibrate(700);
+					break;
+				default:
+					console.log(response.status)
 			}
-			console.log(res.status)
-		}).catch(e => {
-			console.log(e)
-		});
-		// LayoutAnimation.spring();
-		// this.props.navigation.navigate('ProductsList', {title: 'Cool Product List'});
+		}
+		catch (error) {
+			console.log(`${error} fetching login and pwd`)
+		}
 	};
 
 	handleChangeEmail = (email) => {
@@ -49,6 +68,10 @@ export default class Home extends React.PureComponent {
 
 	handleChangePwd = (pwd) => {
 		this.setState({ pwd })
+	};
+
+	handleChangeShowNotification = (showNotification) => {
+		this.setState({ showNotification })
 	};
 
 	render () {
@@ -66,6 +89,7 @@ export default class Home extends React.PureComponent {
 					value={this.state.pwd}
 					secureTextEntry={true}
 					onChangeText={(pwd) => this.handleChangePwd(pwd)}/>
+				{this.state.showNotification && <Text style={styles.errorText}>Wrong login or password!!!</Text>}
 				<TouchableOpacity
 					onPress={this.handleLogin}
 					style={styles.button}>
