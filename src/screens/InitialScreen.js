@@ -13,7 +13,6 @@ export default class InitialScreen extends React.PureComponent {
 		const { navigation } = this.props;
 
 		try {
-			// const loggedIn = null
 			const loggedIn = await AsyncStorage.getItem('UserIsLoggedIn');
 
 			if (loggedIn !== null) {
