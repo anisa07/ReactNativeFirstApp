@@ -7,6 +7,7 @@
  */
 
 import React, {Component} from 'react';
+import SplashScreen from 'react-native-splash-screen'
 import AppContainer from './src/AppNavigator';
 
 // const instructions = Platform.select({
@@ -19,6 +20,9 @@ import AppContainer from './src/AppNavigator';
 type Props = {};
 
 export default class App extends Component<Props> {
+	componentDidMount() {
+		SplashScreen.hide();
+	}
   render() {
     return (
 	     <AppContainer/>

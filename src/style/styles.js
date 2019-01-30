@@ -12,6 +12,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: base1,
 	},
+	containerOpacity: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		opacity: .2
+	},
 	productList: {
 		backgroundColor: base1,
 	},
@@ -24,6 +30,13 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		// marginBottom: 10,
 		color: base2,
+		fontFamily: 'VINCHAND',
+		textAlign: 'center',
+	},
+	subtitle: {
+		fontSize: 18,
+		// marginBottom: 10,
+		color: err,
 		fontFamily: 'VINCHAND',
 		textAlign: 'center',
 	},
