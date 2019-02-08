@@ -7,7 +7,6 @@ import {
 	NativeModules,
 	LayoutAnimation,
 	Vibration,
-	AsyncStorage,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import DeviceInfo from 'react-native-device-info';
@@ -48,7 +47,8 @@ export default class Home extends React.PureComponent {
 			switch(response.status){
 				case(200):
 					try {
-						await AsyncStorage.setItem('UserIsLoggedIn', 'true');
+						NativeModules.NativeStorage.setItem(JSON.stringify({ UserIsLoggedIn: true }));
+						// await AsyncStorage.setItem('UserIsLoggedIn', 'true');
 					} catch (error) {
 						console.log(`${error} setting authorise status`)
 					}

@@ -13,6 +13,7 @@ import com.facebook.soloader.SoLoader;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.layoutandstylesrn.NativeStoragePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,8 @@ public class MainApplication extends Application implements ReactApplication {
           new RNGestureHandlerPackage(),
           new MapsPackage(),
           new RNDeviceInfo(),
-          new SplashScreenReactPackage()
+          new SplashScreenReactPackage(),
+          new NativeStoragePackage()
       );
     }
 

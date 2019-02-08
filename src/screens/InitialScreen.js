@@ -1,5 +1,5 @@
 import React from "react";
-import { AsyncStorage, LayoutAnimation, View } from 'react-native';
+import { LayoutAnimation, View, NativeModules } from 'react-native';
 import { NetConnectionModal } from "./components/NetConnectionModal";
 
 export default class InitialScreen extends React.PureComponent {
@@ -9,29 +9,24 @@ export default class InitialScreen extends React.PureComponent {
 		this.authenticateSession();
 	}
 
-	async authenticateSession() {
+	authenticateSession() {
 		const { navigation } = this.props;
 
-		try {
-			const loggedIn = await AsyncStorage.getItem('UserIsLoggedIn');
+		NativeModules.NativeStorage.getItem((content = '{}') => {
+			const response = JSON.parse(content);
 
-			if (loggedIn !== null) {
+			if (response.UserIsLoggedIn) {
 				LayoutAnimation.spring();
 				navigation.navigate('ProductsList', { title: 'Cool Product List' });
 			} else {
 				navigation.navigate('Auth');
 			}
-		}
-		catch(e) {
-			console.log(`${e} checking authorise status`)
-		}
+		});
 	}
 
 	render () {
 		return (
-			<View>
-				<NetConnectionModal/>
-			</View>
+			<View/>
 		)
 	}
 }
