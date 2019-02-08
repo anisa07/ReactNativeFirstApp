@@ -48,7 +48,7 @@ export default class Home extends React.PureComponent {
 				case(200):
 					try {
 						NativeModules.NativeStorage.setItem(JSON.stringify({ UserIsLoggedIn: true }));
-						// await AsyncStorage.setItem('UserIsLoggedIn', 'true');
+
 					} catch (error) {
 						console.log(`${error} setting authorise status`)
 					}

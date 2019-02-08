@@ -3,6 +3,7 @@ package com.layoutandstylesrn;
 import android.widget.Toast;
 import android.content.Context;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -18,9 +19,6 @@ import org.json.JSONArray;
 
 public class NativeStorage extends ReactContextBaseJavaModule {
 
-    private static final String DURATION_SHORT_KEY = "SHORT";
-    private static final String DURATION_LONG_KEY = "LONG";
-
     @Override
     public String getName() {
         return "NativeStorage";
@@ -32,7 +30,7 @@ public class NativeStorage extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getItem(Callback callback) {
+    public void getItem(Promise promise) {
         String fileName = "NativeStorageTest4.txt";
         String value = "";
 
@@ -48,12 +46,10 @@ public class NativeStorage extends ReactContextBaseJavaModule {
                 sb.append(s).append("\n");
             }
 
-            this.show(sb.toString(), 25);
-
-            callback.invoke(sb.toString());
+            promise.resolve(sb.toString());
         }
         catch (Exception e) {
-           callback.invoke();
+           promise.resolve("");
         }
     }
 
