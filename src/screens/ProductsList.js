@@ -1,9 +1,10 @@
 import React from "react";
-import {View, FlatList, Animated } from 'react-native';
+import {View, FlatList, Animated, NativeModules } from 'react-native';
 import ProductsListItem from './components/ProductListItem';
 import { NetConnectionModal } from './components/NetConnectionModal';
 import { styles } from '../style/styles';
 import { productListUrl, productListUrl2 } from "../data/settings";
+
 
 export default class ProductsList extends React.PureComponent {
 	animatedValue = new Animated.Value(0);

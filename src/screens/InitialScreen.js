@@ -1,37 +1,31 @@
 import React from "react";
-import { AsyncStorage, LayoutAnimation, View } from 'react-native';
-import { NetConnectionModal } from "./components/NetConnectionModal";
+import { LayoutAnimation, View, NativeModules } from 'react-native';
+
+const { NativeStorage } = NativeModules;
 
 export default class InitialScreen extends React.PureComponent {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 
 		this.authenticateSession();
 	}
 
-	async authenticateSession() {
+	async authenticateSession () {
 		const { navigation } = this.props;
+		const content = await NativeStorage.getItem() || '{}';
+		const response = JSON.parse(content);
 
-		try {
-			const loggedIn = await AsyncStorage.getItem('UserIsLoggedIn');
-
-			if (loggedIn !== null) {
-				LayoutAnimation.spring();
-				navigation.navigate('ProductsList', { title: 'Cool Product List' });
-			} else {
-				navigation.navigate('Auth');
-			}
-		}
-		catch(e) {
-			console.log(`${e} checking authorise status`)
+		if (response.UserIsLoggedIn) {
+			LayoutAnimation.spring();
+			navigation.navigate('ProductsList', { title: 'Cool Product List' });
+		} else {
+			navigation.navigate('Auth');
 		}
 	}
 
 	render () {
 		return (
-			<View>
-				<NetConnectionModal/>
-			</View>
+			<View/>
 		)
 	}
 }
