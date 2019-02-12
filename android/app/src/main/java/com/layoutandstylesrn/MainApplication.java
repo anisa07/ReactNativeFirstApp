@@ -14,6 +14,7 @@ import com.airbnb.android.react.maps.MapsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.layoutandstylesrn.NativeStoragePackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +36,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MapsPackage(),
           new RNDeviceInfo(),
           new SplashScreenReactPackage(),
-          new NativeStoragePackage()
+          new NativeStoragePackage(),
+          new ReactNativePushNotificationPackage()
       );
     }
 
