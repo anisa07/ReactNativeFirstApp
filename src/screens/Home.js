@@ -24,7 +24,7 @@ export default class Home extends React.PureComponent {
 		pwd: '',
 		showNotification: false,
 		niceMg: `Only TODAY, we have special SALE proposals 
-		for users of ${DeviceInfo.getSystemName()} devices, designed in ${DeviceInfo.getDeviceCountry()}.`,
+		for users of ${DeviceInfo.getSystemName()} devices, located in ${DeviceInfo.getDeviceCountry()}.`,
 		waitLogin: false
 	};
 
@@ -44,10 +44,16 @@ export default class Home extends React.PureComponent {
 				body: JSON.stringify({ username: email, password: pwd })
 			});
 
+
 			switch(response.status){
 				case(200):
 					try {
-						NativeModules.NativeStorage.setItem(JSON.stringify({ UserIsLoggedIn: true }));
+						console.log(response._bodyText)
+						NativeModules.NativeStorage.setItem(JSON.stringify({
+							UserIsLoggedIn: true,
+							//token: response._bodyText
+							token: response._bodyText.slice(1, response._bodyText.length-1),
+						}));
 
 					} catch (error) {
 						console.log(`${error} setting authorise status`)
