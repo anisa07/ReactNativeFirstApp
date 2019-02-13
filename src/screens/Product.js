@@ -18,7 +18,7 @@ export default class Product extends React.PureComponent {
 				console.log ('Notification action received: ' + action);
 				const info = JSON.parse(action.dataJSON);
 				if (info.action == 'Accept') {
-					// Do work pertaining to Accept action here
+					this.props.navigation.navigate('Cart')
 				} else if (info.action == 'Reject') {
 					// Do work pertaining to Reject action here
 				}
