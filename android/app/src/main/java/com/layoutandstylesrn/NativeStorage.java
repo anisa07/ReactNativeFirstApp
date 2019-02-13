@@ -18,6 +18,7 @@ import org.json.JSONArray;
 
 
 public class NativeStorage extends ReactContextBaseJavaModule {
+    String fileName = "NativeStorageTest7.txt";
 
     @Override
     public String getName() {
@@ -29,14 +30,26 @@ public class NativeStorage extends ReactContextBaseJavaModule {
         Toast.makeText(getReactApplicationContext(), message, duration).show();
     }
 
+     @ReactMethod
+        public void clearStorage() {
+            String value = "";
+            File file = new File(getReactApplicationContext().getFilesDir(), this.fileName);
+
+            try {
+                file.delete();
+            }
+            catch (Exception e) {
+               this.show("File write failed: " + e.toString(), 10);
+            }
+        }
+
     @ReactMethod
     public void getItem(Promise promise) {
-        String fileName = "NativeStorageTest4.txt";
         String value = "";
 
         try {
             // Open stream to read file.
-            FileInputStream in =  getReactApplicationContext().openFileInput(fileName);
+            FileInputStream in =  getReactApplicationContext().openFileInput(this.fileName);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
@@ -55,12 +68,11 @@ public class NativeStorage extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setItem(String content) {
-        String fileName = "NativeStorageTest4.txt";
         FileOutputStream outputStream;
-        File file = new File(getReactApplicationContext().getFilesDir(), fileName);
+        File file = new File(getReactApplicationContext().getFilesDir(), this.fileName);
 
         try {
-            outputStream = getReactApplicationContext().openFileOutput(fileName, Context.MODE_PRIVATE);
+            outputStream = getReactApplicationContext().openFileOutput(this.fileName, Context.MODE_PRIVATE);
             outputStream.write(content.getBytes());
             outputStream.close();
         } catch (Exception e) {

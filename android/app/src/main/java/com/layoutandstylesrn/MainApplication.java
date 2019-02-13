@@ -4,16 +4,15 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.lottie.LottiePackage;
-import com.airbnb.android.react.lottie.LottiePackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.airbnb.android.react.maps.MapsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.layoutandstylesrn.NativeStoragePackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,10 +31,10 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
           new LottiePackage(),
           new RNGestureHandlerPackage(),
-          new MapsPackage(),
           new RNDeviceInfo(),
           new SplashScreenReactPackage(),
-          new NativeStoragePackage()
+          new NativeStoragePackage(),
+          new ReactNativePushNotificationPackage()
       );
     }
 
