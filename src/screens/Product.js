@@ -8,6 +8,9 @@ export default class Product extends React.PureComponent {
 	handleOpenProductList = () => {
 		this.props.navigation.navigate('ProductsList')
 	};
+	handleAddToCart = () => {
+
+	};
 
 	render () {
 		const { navigation } = this.props;
@@ -24,11 +27,18 @@ export default class Product extends React.PureComponent {
 					<Text style={styles.product}>{item.name}</Text>
 				</View>
 				<Text style={styles.description}>{item.description}</Text>
-				<TouchableOpacity
-					onPress={this.handleOpenProductList}
-					style={styles.button}>
-					<Text style={styles.label}>Products</Text>
-				</TouchableOpacity>
+				<View style={styles.itemContainer}>
+					<TouchableOpacity
+						onPress={this.handleOpenProductList}
+						style={styles.button}>
+						<Text style={styles.label}>Products</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={this.handleAddToCart}
+						style={styles.button}>
+						<Text style={styles.label}>Add to Cart</Text>
+					</TouchableOpacity>
+				</View>
 				<NetConnectionModal/>
 			</View>
 		);

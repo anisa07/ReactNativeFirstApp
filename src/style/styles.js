@@ -55,14 +55,14 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		height: 25,
-		width: 50,
+		width: 75,
 		backgroundColor: base3,
 		margin: 15,
 	},
 	label: {
 		fontFamily: 'VINCHAND',
 		textAlign: 'center',
-		width: 50,
+		width: 75,
 	},
 	itemContainer: {
 		flexDirection: 'row',
