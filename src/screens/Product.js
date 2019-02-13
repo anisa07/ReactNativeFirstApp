@@ -97,7 +97,7 @@ export default class Product extends React.PureComponent {
 
 			console.log(cartResponse);
 		} else {
-
+			this.showNotification('Token is expired', 'Please re-login', `Token is expired , please re-login`);
 		}
 	};
 
