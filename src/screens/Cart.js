@@ -1,24 +1,16 @@
 import React from "react";
-import { View, StyleSheet, Text, NativeStorage } from 'react-native';
+import { View, StyleSheet, Text, NativeModules, TouchableOpacity } from 'react-native';
 import { NetConnectionModal } from './components/NetConnectionModal';
 import { cartItemsUrl } from "../data/settings";
+import { styles } from '../style/styles';
 
-
-const styles = StyleSheet.create({
-	container: {
-		...StyleSheet.absoluteFillObject,
-		height: 400,
-		width: 400,
-		justifyContent: 'flex-end',
-		alignItems: 'center',
-	},
-	map: {
-		...StyleSheet.absoluteFillObject,
-	},
-});
+const { NativeStorage } = NativeModules;
 
 export default class Cart extends React.PureComponent {
-	cartItems = [];
+	state = {
+		cartItems: [],
+	};
+
 
 	async componentDidMount() {
 		const content = await NativeStorage.getItem() || '{}';
@@ -33,18 +25,35 @@ export default class Cart extends React.PureComponent {
 			headers
 		});
 
-		this.cartItems = JSON.parse(cartString._bodyText);
+		this.setState({
+			cartItems: JSON.parse(cartString._bodyText)
+		});
+		console.log(this.cartItems);
 	}
+
+	handleOpenProduct = () => {
+		this.props.navigation.navigate('Product')
+	};
 
 	render() {
 		return (
-			<View style={styles.container}>
-				{
-					this.cartItems.map(item => <View key={item.sku}>
-						<Text>{item.name}</Text>
-						<Text>{item.qty}</Text>
-					</View>)
-				}
+			<View style={styles.container2}>
+				<Text>Cart</Text>
+				<View>
+					{
+						this.state.cartItems.map(item => <View key={item.sku}>
+							<View style={styles.itemContainer}>
+								<Text>{item.name}</Text>
+								<Text>{`  ${item.qty}`}</Text>
+							</View>
+						</View>)
+					}
+				</View>
+				<TouchableOpacity
+					onPress={this.handleOpenProduct}
+					style={styles.button}>
+					<Text style={styles.label}>Product</Text>
+				</TouchableOpacity>
 				<NetConnectionModal />
 			</View>
 		);

@@ -12,6 +12,11 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: base1,
 	},
+	container2: {
+		flex: 1,
+		alignItems: 'center',
+		backgroundColor: base1,
+	},
 	containerOpacity: {
 		flex: 1,
 		justifyContent: 'center',
