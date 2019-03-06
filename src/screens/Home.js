@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import DeviceInfo from 'react-native-device-info';
+import * as Keychain from 'react-native-keychain';
 import { NetConnectionModal } from './components/NetConnectionModal';
 import { styles } from '../style/styles';
 import { loginUrl } from "../data/settings";
@@ -47,8 +48,8 @@ export default class Home extends React.PureComponent {
 			switch(response.status){
 				case(200):
 					try {
-						NativeModules.NativeStorage.setItem(JSON.stringify({ UserIsLoggedIn: true }));
-
+						const token = response._bodyText.slice(1, response._bodyText.length-1);
+						await Keychain.setGenericPassword(email, token);
 					} catch (error) {
 						console.log(`${error} setting authorise status`)
 					}

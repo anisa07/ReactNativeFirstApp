@@ -1,7 +1,6 @@
 import React from "react";
-import { LayoutAnimation, View, NativeModules } from 'react-native';
-
-const { NativeStorage } = NativeModules;
+import * as Keychain from 'react-native-keychain';
+import { LayoutAnimation, View } from 'react-native';
 
 export default class InitialScreen extends React.PureComponent {
 	constructor (props) {
@@ -12,10 +11,9 @@ export default class InitialScreen extends React.PureComponent {
 
 	async authenticateSession () {
 		const { navigation } = this.props;
-		const content = await NativeStorage.getItem() || '{}';
-		const response = JSON.parse(content);
+		const credentials = await Keychain.getGenericPassword();
 
-		if (response.UserIsLoggedIn) {
+		if (credentials && credentials.password) {
 			LayoutAnimation.spring();
 			navigation.navigate('ProductsList', { title: 'Cool Product List' });
 		} else {
